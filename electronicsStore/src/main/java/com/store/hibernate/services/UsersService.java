@@ -9,10 +9,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsersService {
 
-  @Autowired
-  private UsersRepository repository;
+
+  private final UsersRepository repository;
+
+  public UsersService(@Autowired UsersRepository repository){
+    this.repository=repository;
+  }
 
   public Iterable<Users> findAll() {
     return repository.findAll();
+  }
+  public Users findById(Integer id){
+   return repository.findById(id).orElse(null);
   }
 }
