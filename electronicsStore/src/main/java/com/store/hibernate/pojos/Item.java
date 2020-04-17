@@ -12,18 +12,21 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="item")
+@Table(name = "item")
 public class Item implements Serializable {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="item_id")
+  @Column(name = "itemid")
   private Integer itemId;
-  @Column(name="part_name",nullable = false)
+  @Column(name = "part_name", nullable = false
+    ,columnDefinition = "NVARCHAR(MAX)")
   private String itemName;
-  @Column(name= "part_type",length = 100)
+  @Column(name = "part_type", length = 100, columnDefinition = "NVARCHAR(100)")
   private String type;
-  @Column(name="cost",scale = 10,precision = 2,nullable = false)
+  @Column(name = "cost", scale = 10, precision = 2, nullable = false
+      , columnDefinition = "DECIMAL(10,2)")
   private BigDecimal cost;
-  @Column(name="quantity")
+  @Column(name = "quantity")
   private Integer quantity;
 }
