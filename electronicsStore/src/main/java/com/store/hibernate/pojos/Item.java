@@ -1,5 +1,6 @@
-package com.example.hibernate.pojos;
+package com.store.hibernate.pojos;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +13,10 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="item")
-public class Item {
+public class Item implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="itemId")
+  @Column(name="item_id")
   private Integer itemId;
   @Column(name="part_name",nullable = false)
   private String itemName;

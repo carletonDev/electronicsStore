@@ -1,5 +1,6 @@
-package com.example.hibernate.pojos;
+package com.store.hibernate.pojos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "reciept")
-public class Reciept {
+public class Reciept implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

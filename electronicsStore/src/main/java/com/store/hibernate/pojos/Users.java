@@ -1,6 +1,6 @@
-package com.example.hibernate.pojos;
+package com.store.hibernate.pojos;
 
-import com.example.hibernate.pojos.Roles;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "users")
-public class Users {
+public class Users implements Serializable {
 
   @Id
   @Column(name = "userId")
