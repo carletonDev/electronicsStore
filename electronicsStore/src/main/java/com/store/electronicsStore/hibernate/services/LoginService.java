@@ -1,7 +1,7 @@
-package com.store.hibernate.services;
+package com.store.electronicsStore.hibernate.services;
 
-import com.store.hibernate.pojos.Login;
-import com.store.hibernate.repositories.LoginRepository;
+import com.store.electronicsStore.hibernate.pojos.Login;
+import com.store.electronicsStore.hibernate.repositories.LoginRepository;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import org.springframework.beans.factory.annotation.Autowired;

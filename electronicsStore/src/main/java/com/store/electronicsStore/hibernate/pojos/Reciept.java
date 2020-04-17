@@ -1,4 +1,4 @@
-package com.store.hibernate.pojos;
+package com.store.electronicsStore.hibernate.pojos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

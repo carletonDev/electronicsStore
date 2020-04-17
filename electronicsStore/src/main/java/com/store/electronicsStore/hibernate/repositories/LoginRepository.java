@@ -1,6 +1,6 @@
-package com.store.hibernate.repositories;
+package com.store.electronicsStore.hibernate.repositories;
 
-import com.store.hibernate.pojos.Login;
+import com.store.electronicsStore.hibernate.pojos.Login;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

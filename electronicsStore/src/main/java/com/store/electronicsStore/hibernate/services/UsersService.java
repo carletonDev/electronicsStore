@@ -1,8 +1,7 @@
-package com.store.hibernate.services;
+package com.store.electronicsStore.hibernate.services;
 
-import com.store.hibernate.pojos.Users;
-import com.store.hibernate.repositories.UsersRepository;
-import java.util.List;
+import com.store.electronicsStore.hibernate.pojos.Users;
+import com.store.electronicsStore.hibernate.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

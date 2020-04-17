@@ -1,9 +1,7 @@
 package com.store.electronicsStore;
 
-import com.store.hibernate.services.UsersService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,8 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableAutoConfiguration
 @Configuration
 @ComponentScan
-@EntityScan("com.store.hibernate.pojos")
-@EnableJpaRepositories("com.store.hibernate.repositories")
+@EntityScan("com.store.electronicsStore.hibernate.pojos")
+@EnableJpaRepositories("com.store.electronicsStore.hibernate.repositories")
 public class ElectronicsStoreApplication {
 
   private static Logger logger = LogManager.getLogger(ElectronicsStoreApplication.class);

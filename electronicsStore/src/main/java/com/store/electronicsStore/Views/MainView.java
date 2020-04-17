@@ -1,7 +1,7 @@
 package com.store.electronicsStore.Views;
 
-import com.store.hibernate.pojos.Login;
-import com.store.hibernate.services.LoginService;
+import com.store.electronicsStore.hibernate.pojos.Login;
+import com.store.electronicsStore.hibernate.services.LoginService;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
