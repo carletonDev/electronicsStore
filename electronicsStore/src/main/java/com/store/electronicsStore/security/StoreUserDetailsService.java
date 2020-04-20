@@ -3,6 +3,8 @@ package com.store.electronicsStore.security;
 import com.store.electronicsStore.hibernate.pojos.Login;
 import com.store.electronicsStore.hibernate.services.LoginService;
 import java.util.ArrayList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,16 +15,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class StoreUserDetailsService implements UserDetailsService {
 
-  @Autowired
+
   private LoginService loginService;
-  private ArrayList<Login> userDetails = new ArrayList<>();
+  private Logger logger = LogManager.getLogger(StoreUserDetailsService.class);
 
-  public StoreUserDetailsService() {
-
+  public StoreUserDetailsService(LoginService loginService) {
+    this.loginService=loginService;
   }
 
   @Override
   public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    logger.info(loginService);
     Login loggedInUser = loginService.findUser(userName);
 
     if (loggedInUser == null) {

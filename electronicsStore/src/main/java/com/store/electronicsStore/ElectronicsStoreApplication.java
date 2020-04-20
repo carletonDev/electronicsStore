@@ -19,8 +19,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 public class ElectronicsStoreApplication {
 
-  private static Logger logger = LogManager.getLogger(ElectronicsStoreApplication.class);
-
 
   public static void main(String[] args) {
     SpringApplication.run(ElectronicsStoreApplication.class, args);

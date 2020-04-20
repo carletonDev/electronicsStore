@@ -6,13 +6,15 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService implements Serializable {
 
   private final LoginRepository loginRepository;
-
+  private final Logger logger = LogManager.getLogger(LoginService.class);
 
   public LoginService(LoginRepository loginRepository) {
     this.loginRepository = loginRepository;
@@ -30,6 +32,7 @@ public class LoginService implements Serializable {
   }
 
   public Login findUser(String username) {
+    logger.info(loginRepository);
     AtomicReference<Login> loggedInUser = new AtomicReference<>();
     loginRepository.findAll().iterator().forEachRemaining(login -> {
       if (Objects.equals(login.getUsername(), username)) {

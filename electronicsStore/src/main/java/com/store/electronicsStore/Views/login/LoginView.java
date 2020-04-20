@@ -4,6 +4,7 @@ package com.store.electronicsStore.Views.login;
 import com.store.electronicsStore.security.CustomRequestCache;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -29,14 +30,20 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
   @Autowired
   public LoginView(AuthenticationManager authenticationManager,
       CustomRequestCache requestCache){
+    LoginI18n loginForm = LoginI18n.createDefault();
+    login.setI18n(loginForm);
     login.setAction("login");
     login.setOpened(true);
-    login.setTitle("Electronics Store");
+    login.setTitle("Carltronics");
+    loginForm.getForm().setTitle("Login");
+    loginForm.getForm().setForgotPassword("Sign Up");
     login.setForgotPasswordButtonVisible(true);
-    login.setDescription("Electronics Store Login");
-    getElement().appendChild(login.getElement()); //
+    login.setI18n(loginForm);
+    login.setDescription("");
+    getElement().appendChild(login.getElement());
     add(login);
-    login.addLoginListener(e -> { //
+    login.addForgotPasswordListener(forgotPasswordEvent -> register());
+    login.addLoginListener(e -> {
       try {
         // try to authenticate with given credentials, should always return not null or throw an {@link AuthenticationException}
         final Authentication authentication = authenticationManager
@@ -52,6 +59,16 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
       }
     });
   }
+
+  private void register() {
+    login.close();
+    displayRegisterView();
+  }
+
+  private void displayRegisterView() {
+    getUI().ifPresent(ui->ui.navigate(RegisterView.class));
+  }
+
   @Override
   public void beforeEnter(BeforeEnterEvent event) { //
     // inform the user about an authentication error
