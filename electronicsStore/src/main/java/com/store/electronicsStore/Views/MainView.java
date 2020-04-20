@@ -14,7 +14,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route(value = "login")
+@Route(value = "main")
 public class MainView extends VerticalLayout {
 
   private final LoginService loginService;
@@ -23,7 +23,7 @@ public class MainView extends VerticalLayout {
   private Button submit = createButton("SecurityConfig");
 
 
-  public MainView(@Autowired LoginService loginService) {
+  public MainView(LoginService loginService) {
     this.loginService = loginService;
     submit.addClickListener(this::checkLogin);
     this.add(formLayout(username)

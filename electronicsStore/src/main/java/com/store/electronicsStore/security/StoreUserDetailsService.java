@@ -1,4 +1,4 @@
-package com.store.electronicsStore;
+package com.store.electronicsStore.security;
 
 import com.store.electronicsStore.hibernate.pojos.Login;
 import com.store.electronicsStore.hibernate.services.LoginService;
