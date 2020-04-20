@@ -14,13 +14,13 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route
+@Route(value = "login")
 public class MainView extends VerticalLayout {
 
   private final LoginService loginService;
   private TextField username = createTextfield("UserName");
   private TextField password = createTextfield("Password");
-  private Button submit = createButton("Login");
+  private Button submit = createButton("SecurityConfig");
 
 
   public MainView(@Autowired LoginService loginService) {
@@ -38,12 +38,12 @@ public class MainView extends VerticalLayout {
 
 
     if(user !=null){
-      notification.setText("Login Successful! welcome "+user.getUsers().getFirstName()+" "
+      notification.setText("SecurityConfig Successful! welcome "+user.getUsers().getFirstName()+" "
       +user.getUsers().getLastName());
       notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
       notification.open();
     }else{
-      notification.setText("Login Failed!");
+      notification.setText("SecurityConfig Failed!");
       notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
       notification.open();
     }

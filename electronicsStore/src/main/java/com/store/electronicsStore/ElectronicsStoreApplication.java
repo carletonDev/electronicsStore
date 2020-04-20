@@ -10,16 +10,16 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+
 @EnableAutoConfiguration
 @Configuration
 @ComponentScan
 @EntityScan("com.store.electronicsStore.hibernate.pojos")
 @EnableJpaRepositories("com.store.electronicsStore.hibernate.repositories")
+@SpringBootApplication
 public class ElectronicsStoreApplication {
 
   private static Logger logger = LogManager.getLogger(ElectronicsStoreApplication.class);
-
 
 
   public static void main(String[] args) {
