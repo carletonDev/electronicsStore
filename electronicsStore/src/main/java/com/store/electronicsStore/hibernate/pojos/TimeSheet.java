@@ -14,23 +14,23 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="timesheet",schema = "dbo")
+@Table(name = "timesheet", schema = "dbo")
 public class TimeSheet implements Serializable {
 
   private static final long serialVersionUID = -5894008789931079572L;
 
   @Id
-  @Column(name="timeid")
-  @GeneratedValue(strategy= GenerationType.IDENTITY)
+  @Column(name = "timeid")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer timeId;
 
   @ManyToOne
-  @JoinColumn(name="userid",insertable = false,updatable = false)
+  @JoinColumn(name = "userid", insertable = false, updatable = false)
   private Users users;
 
-  @Column(name="time_in")
+  @Column(name = "time_in")
   private LocalDateTime timeIn;
 
-  @Column(name="time_out")
+  @Column(name = "time_out")
   private LocalDateTime timeOut;
 }

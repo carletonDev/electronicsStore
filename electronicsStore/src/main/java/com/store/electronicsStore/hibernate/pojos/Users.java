@@ -38,5 +38,7 @@ public class Users implements Serializable {
   private Roles role;
   @Column(name = "email", length = 250, columnDefinition = "NVARCHAR(250)")
   private String email;
+  @Column(name="zip",length = 10)
+  private Number zip;
 
 }

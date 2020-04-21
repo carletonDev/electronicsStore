@@ -32,7 +32,7 @@ public enum StateEnum {
       "Virginia", "VA"), WASHINGTON(
       "Washington", "WA"), WEST_VIRGINIA("West Virginia", "WV"), WISCONSIN("Wisconsin",
       "WI"), WYOMING("Wyoming", "WY"), UNKNOWN(
-      "Unknown", "");
+      "Enter State", "");
   /**
    * The state's name.
    */
@@ -48,4 +48,5 @@ public enum StateEnum {
     this.name = name;
     this.abbreviation = abbreviation;
   }
+
 }
