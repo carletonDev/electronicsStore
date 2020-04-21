@@ -4,6 +4,7 @@ import com.store.electronicsStore.hibernate.pojos.Login;
 import com.store.electronicsStore.hibernate.services.LoginService;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
@@ -14,7 +15,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route(value = "main")
+@Route(value = "main",layout = MainLayout.class)
 public class MainView extends VerticalLayout {
 
 

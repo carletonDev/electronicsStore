@@ -11,6 +11,8 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.material.Material;
 import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Tag("sa-login-view")
 @Route(value = LoginView.ROUTE)
 @PageTitle("Login")
+@Theme(value= Material.class,variant = Material.DARK)
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
   public static final String ROUTE = "login";
 

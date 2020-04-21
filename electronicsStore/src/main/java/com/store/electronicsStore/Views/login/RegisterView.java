@@ -12,6 +12,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -26,8 +27,11 @@ import com.vaadin.flow.data.converter.Converter;
 import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.material.Material;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +40,7 @@ import org.springframework.util.CollectionUtils;
 
 @Route(value = RegisterView.ROUTE)
 @PageTitle("Register")
+@Theme(value= Material.class,variant = Material.DARK)
 public class RegisterView extends VerticalLayout {
 
   public static final String ROUTE = "register";
@@ -67,8 +72,11 @@ public class RegisterView extends VerticalLayout {
     this.usersRepository = usersRepository;
     this.loginRepository = loginRepository;
     this.rolesRepository = rolesRepository;
-
+    this.phone.setValue(Double.valueOf("0"));
     bind();
+    this.setMargin(true);
+    this.setSizeFull();
+    this.setBoxSizing(BoxSizing.CONTENT_BOX);
     add(horizontalLayout(formLayout(firstName), formLayout(lastName))
         , horizontalLayout(formLayout(address), formLayout(city), formLayout(state), formLayout(zip))
         , formLayout(email)
@@ -82,7 +90,7 @@ public class RegisterView extends VerticalLayout {
     TextField textField = new TextField();
     textField.setLabel(caption);
     textField.setRequired(true);
-    textField.addThemeVariants(TextFieldVariant.LUMO_SMALL);
+
     return textField;
   }
 
@@ -90,7 +98,6 @@ public class RegisterView extends VerticalLayout {
     EmailField email = new EmailField();
     email.setLabel("txt_email");
     email.setMaxLength(50);
-    email.addThemeVariants(TextFieldVariant.LUMO_SMALL);
     return email;
   }
 
@@ -98,7 +105,7 @@ public class RegisterView extends VerticalLayout {
     NumberField numberField = new NumberField();
     numberField.setLabel(caption);
     numberField.setMax(max);
-    numberField.addThemeVariants(TextFieldVariant.LUMO_SMALL);
+
     return numberField;
   }
 
@@ -120,7 +127,7 @@ public class RegisterView extends VerticalLayout {
     ObservableList<StateEnum> list = FXCollections.observableList(collection);
     state.setLabel("txt_state");
     state.setItems(list);
-    state.setValue(StateEnum.UNKNOWN);
+    state.setValue(StateEnum.ENTERSTATE);
     return state;
   }
 
@@ -137,25 +144,35 @@ public class RegisterView extends VerticalLayout {
     binder.forField(firstName).bind("firstName");
     binder.forField(lastName).bind("lastName");
     binder.forField(address)
-        .withValidator(v -> v.length() == 100, "Address length too long!")
+        .withValidator(v -> !Objects.equals(v.length(),100), "Address length too long!")
         .bind("address");
     binder.forField(city)
-        .withValidator(v -> v.length() == 100, "City length too long");
+        .withValidator(v -> !Objects.equals(v.length(),100), "City length too long");
     binder.forField(state)
         .withConverter(new StateEnumToStringConverter())
         .bind("state");
     binder.forField(phone)
-        .withValidator(v -> v.toString().length() == 10, "Phone Length is too long")
+        .withValidator(v->validate(v,10), "Phone Length is too long")
         .bind("phone");
     binder.forField(email)
         .withValidator(new EmailValidator("Not Proper E-mail"))
         .bind("email");
     binder.forField(password)
-        .withValidator(v -> v.length() == 10, "password must be 7-10 characters")
+        .withValidator(v -> !Objects.equals(v.length(),10), "password must be 7-10 characters")
         .bind("password");
     binder.forField(username)
-        .withValidator(v -> v.length() == 50, "username too long less than 50 characters");
+        .withValidator(v -> !Objects.equals(v.length(),50), "username too long less than 50 characters");
+    binder.forField(zip)
+        .withValidator(v->validate(v,5),"zip code is too long")
+        .bind("zip");
 
+  }
+
+  private boolean validate(Double object,Integer length) {
+    if(object!=null) {
+      return !Objects.equals(object.toString().length(),length);
+    }
+    return true;
   }
 
   private void registerUser() {
@@ -200,7 +217,6 @@ public class RegisterView extends VerticalLayout {
     HorizontalLayout layout = new HorizontalLayout();
     layout.setSpacing(true);
     layout.setSizeUndefined();
-    layout.setPadding(true);
     layout.add(components);
     return layout;
   }
@@ -215,7 +231,7 @@ public class RegisterView extends VerticalLayout {
 
     @Override
     public StateEnum convertToPresentation(String s, ValueContext valueContext) {
-      return !s.isEmpty()? StateEnum.valueOf(s) : StateEnum.UNKNOWN;
+      return s !=null? StateEnum.valueOf(s) : StateEnum.ENTERSTATE;
     }
   }
 }

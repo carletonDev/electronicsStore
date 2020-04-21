@@ -31,7 +31,7 @@ public enum StateEnum {
       "Utah", "UT"), VERMONT("Vermont", "VT"), VIRGIN_ISLANDS("Virgin Islands", "VI"), VIRGINIA(
       "Virginia", "VA"), WASHINGTON(
       "Washington", "WA"), WEST_VIRGINIA("West Virginia", "WV"), WISCONSIN("Wisconsin",
-      "WI"), WYOMING("Wyoming", "WY"), UNKNOWN(
+      "WI"), WYOMING("Wyoming", "WY"), ENTERSTATE(
       "Enter State", "");
   /**
    * The state's name.
