@@ -13,9 +13,10 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "dbo")
 public class Users implements Serializable {
 
+  private static final long serialVersionUID = -2920276092638972623L;
   @Id
   @Column(name = "userid")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +36,7 @@ public class Users implements Serializable {
   @ManyToOne
   @JoinColumn(name = "roleid", insertable = false, updatable = false)
   private Roles role;
+  @Column(name = "email", length = 250, columnDefinition = "NVARCHAR(250)")
+  private String email;
 
 }

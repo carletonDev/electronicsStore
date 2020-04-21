@@ -12,9 +12,10 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "item")
+@Table(name = "item" ,schema = "dbo")
 public class Item implements Serializable {
 
+  private static final long serialVersionUID = 2484915733355484677L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "itemid")

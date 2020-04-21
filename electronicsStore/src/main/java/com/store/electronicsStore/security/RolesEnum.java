@@ -1,12 +1,12 @@
 package com.store.electronicsStore.security;
 
-public enum Roles {
+public enum RolesEnum {
   admin("Admin"),
   employee("Employee"),
   customer("Customer");
   private String roleType;
 
-  Roles(String roleType){
+  RolesEnum(String roleType){
     this.roleType=roleType;
   }
 }
