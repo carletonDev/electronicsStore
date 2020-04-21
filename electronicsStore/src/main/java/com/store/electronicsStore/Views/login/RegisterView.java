@@ -47,17 +47,17 @@ public class RegisterView extends VerticalLayout {
   private final UsersRepository usersRepository;
   private final LoginRepository loginRepository;
   private final RolesRepository rolesRepository;
-  private TextField firstName = createTextField("txt_first");
-  private TextField lastName = createTextField("txt_last");
-  private TextField address = createTextField("txt_address");
-  private TextField city = createTextField("txt_city");
-  private TextField username = createTextField("txt_username");
+  private TextField firstName = createTextField("First Name");
+  private TextField lastName = createTextField("Last Name");
+  private TextField address = createTextField("Address");
+  private TextField city = createTextField("City");
+  private TextField username = createTextField("Username");
   private PasswordField password = createPasswordField();
   private EmailField email = createEmailField();
   private ComboBox<StateEnum> state = createStateComboBox();
   @SuppressWarnings("FieldCanBeLocal")
-  private NumberField zip = createNumber("txt_zip", 5);
-  private NumberField phone = createNumber("txt_phone", 10);
+  private NumberField zip = createNumber("Zip", 5);
+  private NumberField phone = createNumber("Phone", 10);
   //Save Objects
   private Users newUser = new Users();
   private Login newLogin = new Login();
@@ -96,7 +96,7 @@ public class RegisterView extends VerticalLayout {
 
   private EmailField createEmailField() {
     EmailField email = new EmailField();
-    email.setLabel("txt_email");
+    email.setLabel("E-mail");
     email.setMaxLength(50);
     return email;
   }
@@ -111,7 +111,7 @@ public class RegisterView extends VerticalLayout {
 
   private PasswordField createPasswordField() {
     PasswordField password = new PasswordField();
-    password.setLabel("txt_pass");
+    password.setLabel("Password");
     password.setMaxLength(10);
     password.setRevealButtonVisible(true);
     password.addThemeVariants(TextFieldVariant.LUMO_SMALL);
@@ -125,7 +125,7 @@ public class RegisterView extends VerticalLayout {
     List<StateEnum> collection = new ArrayList<>();
     CollectionUtils.mergeArrayIntoCollection(StateEnum.values(), collection);
     ObservableList<StateEnum> list = FXCollections.observableList(collection);
-    state.setLabel("txt_state");
+    state.setLabel("State");
     state.setItems(list);
     state.setValue(StateEnum.ENTERSTATE);
     return state;
@@ -133,7 +133,7 @@ public class RegisterView extends VerticalLayout {
 
   private Button createRegisterButton() {
     Button button = new Button();
-    button.setText("txt_register");
+    button.setText("Register");
     button.addClickListener(buttonClickEvent -> registerUser());
     return button;
   }
