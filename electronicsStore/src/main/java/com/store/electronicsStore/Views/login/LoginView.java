@@ -24,15 +24,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Tag("sa-login-view")
 @Route(value = LoginView.ROUTE)
 @PageTitle("Login")
-@Theme(value= Material.class,variant = Material.DARK)
+@Theme(value = Material.class, variant = Material.DARK)
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
+
   public static final String ROUTE = "login";
 
   private LoginOverlay login = new LoginOverlay();
 
   @Autowired
   public LoginView(AuthenticationManager authenticationManager,
-      CustomRequestCache requestCache){
+      CustomRequestCache requestCache) {
     LoginI18n loginForm = LoginI18n.createDefault();
     login.setI18n(loginForm);
     login.setAction("login");
@@ -50,8 +51,8 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
       try {
         // try to authenticate with given credentials, should always return not null or throw an {@link AuthenticationException}
         final Authentication authentication = authenticationManager
-            .authenticate(new UsernamePasswordAuthenticationToken(e.getUsername(), e.getPassword())); //
-
+            .authenticate(
+                new UsernamePasswordAuthenticationToken(e.getUsername(), e.getPassword()));
         // if authentication was successful we will update the security context and redirect to the page requested first
         SecurityContextHolder.getContext().setAuthentication(authentication); //
         login.close(); //
@@ -69,13 +70,14 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
   }
 
   private void displayRegisterView() {
-    getUI().ifPresent(ui->ui.navigate(RegisterView.class));
+    getUI().ifPresent(ui -> ui.navigate(RegisterView.class));
   }
 
   @Override
   public void beforeEnter(BeforeEnterEvent event) { //
     // inform the user about an authentication error
-    if(!event.getLocation().getQueryParameters().getParameters().getOrDefault("error", Collections.emptyList()).isEmpty()) {
+    if (!event.getLocation().getQueryParameters().getParameters()
+        .getOrDefault("error", Collections.emptyList()).isEmpty()) {
       login.setError(true); //
     }
   }
