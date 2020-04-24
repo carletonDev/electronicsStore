@@ -31,14 +31,14 @@ public class Users implements Serializable {
   private String city;
   @Column(name = "user_state", length = 100, columnDefinition = "NVARCHAR(100)")
   private String state;
-  @Column(name = "phone", precision = 10, columnDefinition = "NUMERIC(10,0)")
-  private Number phone;
+  @Column(name = "phone", length = 22)
+  private String phone;
   @ManyToOne
   @JoinColumn(name = "roleid", insertable = false, updatable = false)
   private Roles role;
   @Column(name = "email", length = 250, columnDefinition = "NVARCHAR(250)")
   private String email;
-  @Column(name="zip",precision = 5)
-  private Number zip;
+  @Column(name = "zip", columnDefinition = "INT")
+  private Integer zip;
 
 }

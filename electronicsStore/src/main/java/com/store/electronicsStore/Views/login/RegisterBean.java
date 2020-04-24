@@ -14,11 +14,11 @@ public class RegisterBean implements Serializable {
   private String address;
   private String city;
   private String state;
-  private Number phone;
+  private String phone;
   private String email;
   private String password;
   private String username;
-  private Number zip;
+  private Integer zip;
 
   public RegisterBean() {
 

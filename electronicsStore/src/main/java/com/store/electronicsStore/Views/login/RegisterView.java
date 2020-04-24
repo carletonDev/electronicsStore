@@ -16,6 +16,7 @@ import com.vaadin.flow.component.orderedlayout.BoxSizing;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -35,12 +36,14 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 @Route(value = RegisterView.ROUTE)
 @PageTitle("Register")
-@Theme(value= Material.class,variant = Material.DARK)
+@Theme(value = Material.class, variant = Material.DARK)
 public class RegisterView extends VerticalLayout {
 
   public static final String ROUTE = "register";
@@ -56,12 +59,13 @@ public class RegisterView extends VerticalLayout {
   private EmailField email = createEmailField();
   private ComboBox<StateEnum> state = createStateComboBox();
   @SuppressWarnings("FieldCanBeLocal")
-  private NumberField zip = createNumber("Zip", 5);
-  private NumberField phone = createNumber("Phone", 10);
+  private IntegerField zip = createNumber("Zip", 5);
+  private TextField phone = createTextField("Phone");
   //Save Objects
   private Users newUser = new Users();
   private Login newLogin = new Login();
   private Binder<RegisterBean> binder = new Binder<>(RegisterBean.class);
+  private Logger logger = LogManager.getLogger(RegisterView.class);
   @SuppressWarnings("FieldCanBeLocal")
   private Button register = createRegisterButton();
 
@@ -72,19 +76,20 @@ public class RegisterView extends VerticalLayout {
     this.usersRepository = usersRepository;
     this.loginRepository = loginRepository;
     this.rolesRepository = rolesRepository;
-    this.phone.setValue(Double.valueOf("0"));
     bind();
     this.setMargin(true);
     this.setSizeFull();
     this.setBoxSizing(BoxSizing.CONTENT_BOX);
     add(horizontalLayout(formLayout(firstName), formLayout(lastName))
-        , horizontalLayout(formLayout(address), formLayout(city), formLayout(state), formLayout(zip))
+        ,
+        horizontalLayout(formLayout(address), formLayout(city), formLayout(state), formLayout(zip))
         , formLayout(email)
         , formLayout(username)
         , formLayout(password)
         , formLayout(phone)
         , register);
   }
+
 
   private TextField createTextField(String caption) {
     TextField textField = new TextField();
@@ -101,8 +106,8 @@ public class RegisterView extends VerticalLayout {
     return email;
   }
 
-  private NumberField createNumber(String caption, Integer max) {
-    NumberField numberField = new NumberField();
+  private IntegerField createNumber(String caption, Integer max) {
+    IntegerField numberField = new IntegerField();
     numberField.setLabel(caption);
     numberField.setMax(max);
 
@@ -144,39 +149,41 @@ public class RegisterView extends VerticalLayout {
     binder.forField(firstName).bind("firstName");
     binder.forField(lastName).bind("lastName");
     binder.forField(address)
-        .withValidator(v -> !Objects.equals(v.length(),100), "Address length too long!")
+        .withValidator(v -> !Objects.equals(v.length(), 100), "Address length too long!")
         .bind("address");
     binder.forField(city)
-        .withValidator(v -> !Objects.equals(v.length(),100), "City length too long");
+        .withValidator(v -> !Objects.equals(v.length(), 100), "City length too long");
     binder.forField(state)
         .withConverter(new StateEnumToStringConverter())
         .bind("state");
     binder.forField(phone)
-        .withValidator(v->validate(v,10), "Phone Length is too long")
+        .withValidator(v -> !Objects.equals(v.length(),10), "Phone Length is too long")
         .bind("phone");
     binder.forField(email)
         .withValidator(new EmailValidator("Not Proper E-mail"))
         .bind("email");
     binder.forField(password)
-        .withValidator(v -> !Objects.equals(v.length(),10), "password must be 7-10 characters")
+        .withValidator(v -> !Objects.equals(v.length(), 10), "password must be 7-10 characters")
         .bind("password");
     binder.forField(username)
-        .withValidator(v -> !Objects.equals(v.length(),50), "username too long less than 50 characters");
+        .withValidator(v -> !Objects.equals(v.length(), 50),
+            "username too long less than 50 characters");
     binder.forField(zip)
-        .withValidator(v->validate(v,5),"zip code is too long")
+         .withValidator(v -> validate(v, 5), "zip code is too long")
         .bind("zip");
 
   }
 
-  private boolean validate(Double object,Integer length) {
-    if(object!=null) {
-      return !Objects.equals(object.toString().length(),length);
+  private boolean validate(Integer object, Integer length) {
+    if (object != null) {
+      return !Objects.equals(object.toString().length(), length);
     }
     return true;
   }
 
   private void registerUser() {
     //setUser
+    // logger.info(loginInterface.findAll().toArray());
     RegisterBean bean = binder.getBean();
     newUser.setAddress(bean.getAddress());
     newUser.setCity(bean.getCity());
@@ -189,18 +196,26 @@ public class RegisterView extends VerticalLayout {
     newUser.setZip(bean.getZip());
     usersRepository.save(newUser);
 
+    Users users = findNewUser();
     //setLogin
     newLogin.setPassword(bean.getPassword());
     newLogin.setUsername(bean.getUsername());
-    newLogin.setUsers(newUser);
+    newLogin.setUsers(users);
     loginRepository.save(newLogin);
 
+
+  }
+
+  private Users findNewUser() {
+    Integer count = usersRepository.findAll().size();
+    logger.info(count);
+    return usersRepository.findById(count).orElse(null);
   }
 
   private Roles setCustomer() {
     AtomicReference<Roles> customerRole = new AtomicReference<>();
     rolesRepository.findAll().forEach(roles -> {
-      if (!roles.getRoleType().equals(RolesEnum.customer.name())) {
+      if (!roles.getRoleType().equals(RolesEnum.customer.roleType)) {
         customerRole.set(roles);
       }
     });
@@ -231,7 +246,7 @@ public class RegisterView extends VerticalLayout {
 
     @Override
     public StateEnum convertToPresentation(String s, ValueContext valueContext) {
-      return s !=null? StateEnum.valueOf(s) : StateEnum.ENTERSTATE;
+      return s != null ? StateEnum.valueOf(s) : StateEnum.ENTERSTATE;
     }
   }
 }
