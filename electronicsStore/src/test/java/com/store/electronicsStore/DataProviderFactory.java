@@ -1,4 +1,4 @@
-package com.store.electronicsStore.dataproviderfactories;
+package com.store.electronicsStore;
 
 import com.store.electronicsStore.hibernate.pojos.Login;
 import com.store.electronicsStore.hibernate.repositories.LoginRepository;
