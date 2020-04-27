@@ -1,6 +1,6 @@
 package com.store.electronicsStore.security;
 
-import com.store.electronicsStore.Views.login.LoginView;
+import com.store.electronicsStore.views.login.LoginView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.NotFoundException;

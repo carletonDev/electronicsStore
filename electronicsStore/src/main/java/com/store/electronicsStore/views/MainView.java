@@ -1,4 +1,4 @@
-package com.store.electronicsStore.Views;
+package com.store.electronicsStore.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;

@@ -1,4 +1,4 @@
-package com.store.electronicsStore.Views.login;
+package com.store.electronicsStore.views.login;
 
 import java.io.Serializable;
 import lombok.Data;

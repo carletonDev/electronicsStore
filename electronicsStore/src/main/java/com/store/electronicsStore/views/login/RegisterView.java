@@ -1,4 +1,4 @@
-package com.store.electronicsStore.Views.login;
+package com.store.electronicsStore.views.login;
 
 import com.store.context.StateEnum;
 import com.store.electronicsStore.hibernate.pojos.Login;
@@ -17,7 +17,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;

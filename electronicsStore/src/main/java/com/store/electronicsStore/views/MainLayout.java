@@ -1,4 +1,4 @@
-package com.store.electronicsStore.Views;
+package com.store.electronicsStore.views;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.theme.Theme;

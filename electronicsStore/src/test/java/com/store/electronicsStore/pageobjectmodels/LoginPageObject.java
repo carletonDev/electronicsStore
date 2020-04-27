@@ -1,10 +1,6 @@
 package com.store.electronicsStore.pageobjectmodels;
 
-import static com.store.electronicsStore.decorators.LoginPageDecorator.loginSuccessful;
-
-import com.store.electronicsStore.decorators.LoginPageDecorator;
 import com.store.electronicsStore.hibernate.pojos.Login;
-import com.vaadin.flow.component.UI;
 import java.util.function.Consumer;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
@@ -17,21 +13,24 @@ import org.testng.annotations.Test;
 
 public class LoginPageObject {
 
+  //todo move to decorator class if too many Assert Tests
+  private static Consumer<LoginPageObject> loginSuccessful = (page) -> {
+    Assert.assertEquals(page.getDriver().getCurrentUrl(), "https://localhost:8080");
+  };
   @Getter
   private WebDriver driver;
-
   @FindAll({
-      @FindBy(id="vaadinLoginUsername"),
-      @FindBy(name="username")
+      @FindBy(id = "vaadinLoginUsername"),
+      @FindBy(name = "username")
   })
   private WebElement userTextField;
   @FindAll({
-      @FindBy(id="vaadinLoginPassword"),
-      @FindBy(name="password")
+      @FindBy(id = "vaadinLoginPassword"),
+      @FindBy(name = "password")
   })
   private WebElement passwordTextField;
   @FindBys({
-      @FindBy(id="button")
+      @FindBy(id = "button")
   })
   private WebElement submit;
 
@@ -48,11 +47,6 @@ public class LoginPageObject {
     loginSuccessful.accept(this);
 
   }
-  //todo move to decorator class if too many Assert Tests
-  private static Consumer<LoginPageObject> loginSuccessful=(page)->{
-    Assert.assertEquals(page.getDriver().getCurrentUrl(),"https://localhost:8080/login");
-  };
-
 
 
 }

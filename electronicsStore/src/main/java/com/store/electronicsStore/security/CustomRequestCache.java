@@ -1,6 +1,6 @@
 package com.store.electronicsStore.security;
 
-import com.store.electronicsStore.Views.login.LoginView;
+import com.store.electronicsStore.views.login.LoginView;
 import com.vaadin.flow.server.VaadinServletRequest;
 import com.vaadin.flow.server.VaadinServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
-import sun.java2d.loops.CustomComponent;
 
 
 public class CustomRequestCache extends HttpSessionRequestCache {

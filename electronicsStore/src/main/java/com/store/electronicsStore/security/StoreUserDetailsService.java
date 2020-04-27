@@ -4,6 +4,7 @@ import com.store.electronicsStore.hibernate.pojos.Login;
 import com.store.electronicsStore.hibernate.services.LoginService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jasypt.util.password.PasswordEncryptor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,6 +36,7 @@ public class StoreUserDetailsService implements UserDetailsService {
   }
 
   private UserDetails toUserDetails(Login loggedInUser) {
+
     PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     return User.withUsername(loggedInUser.getUsername())
         .password(encoder.encode(loggedInUser.getPassword()))

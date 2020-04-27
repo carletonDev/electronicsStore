@@ -1,6 +1,6 @@
 package com.store.electronicsStore.security;
 
-import com.store.electronicsStore.Views.login.LoginView;
+import com.store.electronicsStore.views.login.LoginView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
