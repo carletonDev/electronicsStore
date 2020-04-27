@@ -28,5 +28,5 @@ jobs:
       with:
         app-name: 'onshoreelectronics'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_18f8070f0fa74576a9daec2799732998 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_5d518b062be34f69a402621730e040c5 }}
         package: '${{ github.workspace }}/target/*.jar'
