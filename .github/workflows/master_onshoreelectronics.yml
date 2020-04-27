@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: carletonDev/electronicsStore/.github/workflows/master_onshoreelectronics/checkout@master
+    - uses: actions/checkout@https://github.com/carletonDev/electronicsStore.git
 
     - name: Set up Java version
       uses: actions/setup-java@v1
