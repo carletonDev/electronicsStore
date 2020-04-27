@@ -17,6 +17,7 @@ public class LoginPageObject {
   private static Consumer<LoginPageObject> loginSuccessful = (page) -> {
     Assert.assertEquals(page.getDriver().getCurrentUrl(), "https://localhost:8080");
   };
+  //
   @Getter
   private WebDriver driver;
   @FindAll({
