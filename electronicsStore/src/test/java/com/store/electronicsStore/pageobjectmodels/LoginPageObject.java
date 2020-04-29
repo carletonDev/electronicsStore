@@ -15,35 +15,37 @@ public class LoginPageObject {
 
   //todo move to decorator class if too many Assert Tests
   private static Consumer<LoginPageObject> loginSuccessful = (page) -> {
-    Assert.assertEquals(page.getDriver().getCurrentUrl(), "https://localhost:8080");
+    Assert.assertEquals(page.getDriver().getCurrentUrl(), "http://localhost:8080");
   };
   //
   @Getter
   private WebDriver driver;
-  @FindAll({
-      @FindBy(id = "vaadinLoginUsername"),
-      @FindBy(name = "username")
+  @FindBys({
+      @FindBy(tagName = "input"),
+      @FindBy(name="username")
   })
   private WebElement userTextField;
-  @FindAll({
-      @FindBy(id = "vaadinLoginPassword"),
-      @FindBy(name = "password")
+  @FindBys({
+      @FindBy(tagName = "input"),
+      @FindBy(name="password")
   })
   private WebElement passwordTextField;
   @FindBys({
-      @FindBy(id = "button")
+      @FindBy(id = "button"),
+      @FindBy(name="button")
   })
   private WebElement submit;
 
   public LoginPageObject(WebDriver driver) {
     this.driver = driver;
+
   }
 
   @Test
-  public void testLogin(Login login) {
-    driver.get("https://localhost:8080/login");
-    userTextField.sendKeys(login.getUsername());
-    passwordTextField.sendKeys(login.getPassword());
+  public void testLogin(String username, String password) {
+    driver.get("http://localhost:8080/login");
+    userTextField.sendKeys(username);
+    passwordTextField.sendKeys(password);
     submit.click();
     loginSuccessful.accept(this);
 

@@ -3,7 +3,6 @@ package com.store.electronicsStore.hibernate.services;
 import com.store.electronicsStore.hibernate.pojos.Roles;
 import com.store.electronicsStore.hibernate.repositories.RolesRepository;
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +11,7 @@ public class RolesService {
 
   private final RolesRepository rolesRepository;
 
-  public RolesService(@Autowired RolesRepository rolesRepository) {
+  public RolesService(RolesRepository rolesRepository) {
     this.rolesRepository = rolesRepository;
   }
 

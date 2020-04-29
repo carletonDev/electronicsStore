@@ -1,9 +1,9 @@
 package com.store.electronicsStore;
 
 
-import com.store.electronicsStore.hibernate.pojos.Login;
 import com.store.electronicsStore.pageobjectmodels.LoginPageObject;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -13,12 +13,12 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 
-@SpringBootTest(classes = ElectronicsStoreApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = ElectronicsStoreApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
 public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContextTests {
 
 
   @LocalServerPort
-  private int serverPort;
+  private int serverPort = 8080;
   private WebDriverFactory drivers = new WebDriverFactory();
   private WebDriver driver;
 
@@ -35,10 +35,11 @@ public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContex
     driver = drivers.chromeDriver();
   }
 
-  @Test(dataProvider = "logins", dataProviderClass = DataProviderFactory.class)
-  void contextLoads(Login login) {
-    LoginPageObject loginPageObject = new LoginPageObject(driver);
-    loginPageObject.testLogin(login);
+  @Test
+  void contextLoads() {
+    LoginPageObject loginPageObject =
+        PageFactory.initElements(driver, LoginPageObject.class);
+    loginPageObject.testLogin("cabarrus", "nc23112");
   }
 
   @AfterTest
