@@ -20,20 +20,11 @@ public class LoginPageObject {
   //
   @Getter
   private WebDriver driver;
-  @FindBys({
-      @FindBy(tagName = "input"),
-      @FindBy(name="username")
-  })
+  @FindBy(css = "#vaadinLoginUsername > input")
   private WebElement userTextField;
-  @FindBys({
-      @FindBy(tagName = "input"),
-      @FindBy(name="password")
-  })
+  @FindBy(css="#vaadinLoginPassword > input")
   private WebElement passwordTextField;
-  @FindBys({
-      @FindBy(id = "button"),
-      @FindBy(name="button")
-  })
+  @FindBy(css="vaadin-button")
   private WebElement submit;
 
   public LoginPageObject(WebDriver driver) {

@@ -3,7 +3,10 @@ package com.store.electronicsStore.hibernate.services;
 import com.store.electronicsStore.hibernate.pojos.Login;
 import com.store.electronicsStore.hibernate.repositories.LoginRepository;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import org.apache.logging.log4j.LogManager;
@@ -40,6 +43,17 @@ public class LoginService implements Serializable {
       }
     });
     return loggedInUser.get();
+  }
+  public List<Login> findAllLogins(){
+    return loginRepository.findAll();
+  }
+  public  Object[][] createLoginObjects() {
+    ArrayList<ArrayList<Object>> twoDArray = new ArrayList<>();
+
+    for (Login user : loginRepository.findAll()) {
+      twoDArray.add(new ArrayList<>(Collections.singletonList(user)));
+    }
+    return twoDArray.stream().map(ArrayList::toArray).toArray(Object[][]::new);
   }
 
   public Iterator<Login> findAll() {

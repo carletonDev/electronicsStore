@@ -1,5 +1,9 @@
 package com.store.electronicsStore.hibernate;
 
+import com.store.electronicsStore.hibernate.pojos.Login;
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class DataProviderFactory {
 
 
