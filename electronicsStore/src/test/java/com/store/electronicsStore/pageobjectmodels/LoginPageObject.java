@@ -1,5 +1,7 @@
 package com.store.electronicsStore.pageobjectmodels;
 
+import static com.store.electronicsStore.decorators.LoginPageDecorator.loginSuccessful;
+
 import com.store.electronicsStore.hibernate.pojos.Login;
 import java.util.function.Consumer;
 import lombok.Getter;
@@ -13,11 +15,7 @@ import org.testng.annotations.Test;
 
 public class LoginPageObject {
 
-  //todo move to decorator class if too many Assert Tests
-  private static Consumer<LoginPageObject> loginSuccessful = (page) -> {
-    Assert.assertEquals(page.getDriver().getCurrentUrl(), "http://localhost:8080");
-  };
-  //
+
   @Getter
   private WebDriver driver;
   @FindBy(css = "#vaadinLoginUsername > input")
