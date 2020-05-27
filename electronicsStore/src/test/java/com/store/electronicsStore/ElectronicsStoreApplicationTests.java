@@ -50,9 +50,5 @@ public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContex
 
   }
 
-  @AfterTest
-  public void cleanUp() {
-    driver.close();
-  }
 
 }
