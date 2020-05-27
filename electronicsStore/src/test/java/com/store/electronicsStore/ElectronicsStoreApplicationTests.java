@@ -32,7 +32,7 @@ public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContex
   }
 
   private String getRootUrl() {
-    return "http://localhost:" + serverPort;
+    return "http://localhost:" + serverPort+"/";
   }
 
   @BeforeTest
