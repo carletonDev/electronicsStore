@@ -22,8 +22,8 @@ import org.testng.annotations.Test;
 @SpringBootTest(classes = ElectronicsStoreApplication.class, webEnvironment = WebEnvironment.DEFINED_PORT)
 public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContextTests {
 
-  @Autowired
-  private WebDriverFactory drivers;
+
+  private WebDriverFactory drivers=new WebDriverFactory();
   @Autowired
   private WebDriverEventListener listener;
 
@@ -39,7 +39,7 @@ public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContex
   }
 
   @Test
-  void loginToApplication() {
+  void login() {
 
     LoginPageObject loginPageObject =
         PageFactory.initElements(eventWebDriver, LoginPageObject.class);

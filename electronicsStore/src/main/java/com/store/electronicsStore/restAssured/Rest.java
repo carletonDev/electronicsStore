@@ -1,4 +1,4 @@
-package com.store.restAssured;
+package com.store.electronicsStore.restAssured;
 
 import static io.restassured.RestAssured.given;
 import io.restassured.RestAssured;

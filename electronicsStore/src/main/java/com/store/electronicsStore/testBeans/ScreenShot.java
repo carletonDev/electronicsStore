@@ -1,6 +1,6 @@
 package com.store.electronicsStore.testBeans;
 
-import com.store.restAssured.Reporting;
+import com.store.electronicsStore.restAssured.Reporting;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -11,14 +11,14 @@ import org.openqa.selenium.WebDriver;
 
 public class ScreenShot {
 
-  public static void takeScreenshot(WebDriver driver) {
+  public static void takeScreenshot(WebDriver driver,String name) {
     TakesScreenshot screenshot = (TakesScreenshot) driver;
-    writeToImagesFolder(screenshot.getScreenshotAs(OutputType.FILE));
+    writeToImagesFolder(screenshot.getScreenshotAs(OutputType.FILE),name);
   }
 
-  private static void writeToImagesFolder(File screenshot){
+  private static void writeToImagesFolder(File screenshot,String name){
    try{
-     FileUtils.copyFile(screenshot, new File("/src/main/java/TestImages/" + LocalDateTime.now()));
+     FileUtils.copyFile(screenshot, new File("/src/main/java/TestImages/" +name+LocalDateTime.now()));
    }
     catch (IOException ex){
       Reporting.getTestCaseReference().info("Error writing to file...");

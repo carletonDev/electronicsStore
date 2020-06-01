@@ -1,14 +1,9 @@
 package com.store.electronicsStore.testBeans;
 
-import static com.store.restAssured.Reporting.endReporting;
-import static com.store.restAssured.Reporting.endTest;
-import static com.store.restAssured.Reporting.startReporting;
-import static com.store.restAssured.Reporting.startTestReporting;
+import static com.store.electronicsStore.restAssured.Reporting.endReporting;
+import static com.store.electronicsStore.restAssured.Reporting.startReporting;
+import static com.store.electronicsStore.restAssured.Reporting.startTestReporting;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.springframework.stereotype.Component;
 import org.testng.ITestContext;
 import org.testng.ITestListener;

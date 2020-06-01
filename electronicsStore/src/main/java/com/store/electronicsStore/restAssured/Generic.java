@@ -1,4 +1,4 @@
-package com.store.restAssured;
+package com.store.electronicsStore.restAssured;
 
 import java.io.File;
 import java.io.FileNotFoundException;

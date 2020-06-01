@@ -1,4 +1,4 @@
-package com.store.restAssured;
+package com.store.electronicsStore.restAssured;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
