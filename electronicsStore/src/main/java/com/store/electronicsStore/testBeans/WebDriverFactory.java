@@ -1,4 +1,4 @@
-package com.store.electronicsStore;
+package com.store.electronicsStore.testBeans;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.Serializable;
