@@ -1,5 +1,8 @@
 package com.store.electronicsStore.testBeans;
 
+import static com.store.restAssured.Reporting.getTestCaseReference;
+
+import com.store.restAssured.Reporting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
@@ -82,11 +85,13 @@ public class WebDriverListener implements WebDriverEventListener {
 
   @Override
   public void beforeClickOn(WebElement element, WebDriver driver) {
+    getTestCaseReference().info("clicking on element "+element.getTagName());
     ScreenShot.takeScreenshot(driver);
   }
 
   @Override
   public void afterClickOn(WebElement element, WebDriver driver) {
+    getTestCaseReference().info("finished clicking on element "+ element.getTagName());
     ScreenShot.takeScreenshot(driver);
   }
 
@@ -137,11 +142,14 @@ public class WebDriverListener implements WebDriverEventListener {
 
   @Override
   public void beforeGetText(WebElement element, WebDriver driver) {
-
+    getTestCaseReference().info("sending keys to element"+element.getTagName());
+    ScreenShot.takeScreenshot(driver);
   }
 
   @Override
   public void afterGetText(WebElement element, WebDriver driver, String text) {
+    getTestCaseReference().info("finished sending keys to element "+element.getTagName());
+    ScreenShot.takeScreenshot(driver);
 
   }
 }

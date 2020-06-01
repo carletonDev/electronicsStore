@@ -39,7 +39,7 @@ public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContex
   }
 
   @Test
-  void contextLoads() {
+  void loginToApplication() {
 
     LoginPageObject loginPageObject =
         PageFactory.initElements(eventWebDriver, LoginPageObject.class);
