@@ -38,7 +38,7 @@ public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContex
     eventWebDriver.register(listener);
   }
 
-  @Test
+  @Test(testName = "login")
   void login() {
 
     LoginPageObject loginPageObject =
