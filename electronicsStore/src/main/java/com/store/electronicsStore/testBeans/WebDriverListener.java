@@ -5,7 +5,9 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.springframework.stereotype.Component;
 
+@Component
 public class WebDriverListener implements WebDriverEventListener {
 
   @Override
@@ -80,12 +82,12 @@ public class WebDriverListener implements WebDriverEventListener {
 
   @Override
   public void beforeClickOn(WebElement element, WebDriver driver) {
-
+    ScreenShot.takeScreenshot(driver);
   }
 
   @Override
   public void afterClickOn(WebElement element, WebDriver driver) {
-
+    ScreenShot.takeScreenshot(driver);
   }
 
   @Override

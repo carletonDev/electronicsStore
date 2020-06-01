@@ -8,7 +8,9 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.springframework.stereotype.Component;
 
+@Component
 public class WebDriverFactory implements Serializable {
 
   private static final long serialVersionUID = 4950947366205506334L;
