@@ -5,14 +5,13 @@ import com.store.electronicsStore.hibernate.repositories.LoginRepository;
 import com.store.electronicsStore.pageobjectmodels.LoginPageObject;
 import com.store.electronicsStore.testBeans.TestListener;
 import com.store.electronicsStore.testBeans.WebDriverFactory;
-import javax.validation.constraints.Max.List;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
@@ -23,18 +22,19 @@ import org.testng.annotations.Test;
 public class ElectronicsStoreApplicationTests extends AbstractTestNGSpringContextTests {
 
 
-  private WebDriverFactory drivers=new WebDriverFactory();
+
+  @LocalServerPort
+  private int serverPort = 8080;
+
+  private WebDriverFactory drivers = new WebDriverFactory();
   @Autowired
   private WebDriverEventListener listener;
-
-  EventFiringWebDriver eventWebDriver;
-
   @Autowired
   private LoginRepository loginRepository;
-
+  private EventFiringWebDriver eventWebDriver;
   @BeforeTest
   public void setupDriver() {
-    eventWebDriver=new EventFiringWebDriver(drivers.chromeDriver());
+    eventWebDriver = new EventFiringWebDriver(drivers.chromeDriver());
     eventWebDriver.register(listener);
   }
 

@@ -17,7 +17,7 @@ public class TestListener implements ITestListener {
   @Override
   public void onTestStart(ITestResult result) {
     startReporting();
-    startTestReporting(result.getTestName());
+    startTestReporting(result.getName());
   }
 
   @Override
