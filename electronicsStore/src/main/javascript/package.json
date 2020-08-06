@@ -1,0 +1,22 @@
+{
+  "name": "carl-e-commerce",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "UNLICENSE",
+  "description": "E Commerce Standalone Desktop Application",
+  "dependencies": {
+    "electron-packager": "^13.1.1",
+    "minimal-request-promise": "^1.4.0",
+    "tree-kill": "^1.1.0"
+  },
+  "scripts": {
+    "package": "electron-packager ./ --icon=logo.ico --ignore=.idea --ignore=src --ignore=DataSource --ignore=result --ignore=POM.iml --ignore=pom.xml",
+    "package-windows": "electron-packager ./ --icon=logo.ico --ignore=.idea --ignore=src --ignore=DataSource --ignore=result --ignore=POM.iml --ignore=pom.xml --platform=win32",
+    "package-linux": "electron-packager ./ --icon=logo.ico --ignore=.idea --ignore=src --ignore=DataSource --ignore=result --ignore=POM.iml --ignore=pom.xml --platform=linux",
+    "package-mac": "electron-packager ./ --icon=logo.ico --ignore=.idea --ignore=src --ignore=DataSource --ignore=result --ignore=POM.iml --ignore=pom.xml--platform=darwin",
+    "package-all": "electron-packager ./ --icon=logo.ico --ignore=.idea --ignore=src --ignore=DataSource --ignore=result --ignore=POM.iml --ignore=pom.xml --ignore=pom.xml --platform=all"
+  },
+  "devDependencies": {
+    "electron": "^5.0.1"
+  }
+}

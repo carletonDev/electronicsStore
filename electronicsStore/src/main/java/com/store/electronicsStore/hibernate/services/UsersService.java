@@ -1,9 +1,12 @@
 package com.store.electronicsStore.hibernate.services;
 
 import com.store.electronicsStore.hibernate.pojos.Users;
+import com.store.electronicsStore.hibernate.repositories.LoginRepository;
 import com.store.electronicsStore.hibernate.repositories.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.util.stream.Collectors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,9 +14,12 @@ public class UsersService {
 
 
   private final UsersRepository repository;
+  private final LoginRepository loginRepository;
+  private Logger logger = LogManager.getLogger(UsersService.class);
 
-  public UsersService(@Autowired UsersRepository repository) {
+  public UsersService(UsersRepository repository, LoginRepository loginRepository) {
     this.repository = repository;
+    this.loginRepository = loginRepository;
   }
 
   public Iterable<Users> findAll() {
@@ -23,4 +29,16 @@ public class UsersService {
   public Users findById(Integer id) {
     return repository.findById(id).orElse(null);
   }
+
+  public Users getLoggedInUsers(Object principal) {
+    Users user = null;
+    if (principal instanceof UserDetails) {
+      UserDetails details = ((UserDetails) principal);
+      logger.info(details);
+      logger.info( details.getUsername());
+      loginRepository.findbyUsername(details.getUsername());
+    }
+      return user;
+
+    }
 }

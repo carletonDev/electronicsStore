@@ -24,7 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Tag("sa-login-view")
 @Route(value = LoginView.ROUTE)
 @PageTitle("Login")
-@Theme(value = Material.class, variant = Material.DARK)
+@Theme(value = Material.class, variant = Material.LIGHT)
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
   public static final String ROUTE = "login";

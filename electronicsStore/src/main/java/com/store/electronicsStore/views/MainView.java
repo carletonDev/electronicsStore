@@ -1,5 +1,6 @@
 package com.store.electronicsStore.views;
 
+import com.store.electronicsStore.views.layouts.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -7,7 +8,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "main", layout = MainLayout.class)
+@Route(value = "", layout = MainLayout.class)
 public class MainView extends VerticalLayout {
 
 

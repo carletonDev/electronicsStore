@@ -18,7 +18,13 @@
     <azure.version>2.2.0</azure.version>  
     <vaadin.version>14.1.23</vaadin.version>  
     <docker.image.prefix>electronicsStore</docker.image.prefix> 
-  </properties>  
+  </properties>
+  <repositories>
+    <repository>
+      <id>vaadin-addons</id>
+      <url>https://maven.vaadin.com/vaadin-addons</url>
+    </repository>
+  </repositories>
   <dependencies> 
     <dependency> 
       <groupId>org.springframework.boot</groupId>  
@@ -43,6 +49,18 @@
       <artifactId>json-path</artifactId>
       <version>2.4.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.vaadin.crudui</groupId>
+      <artifactId>crudui</artifactId>
+      <version>4.3.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.11.3</version>
+    </dependency>
+
     <dependency> 
       <groupId>org.webjars.bowergithub.polymerelements</groupId>  
       <artifactId>iron-form</artifactId>  
@@ -139,36 +157,309 @@
           <wait>1000</wait>  
           <maxAttempts>180</maxAttempts> 
         </configuration> 
-      </plugin>  
-      <!--<plugin> -->
-        <!--<groupId>com.microsoft.azure</groupId>  -->
-        <!--<artifactId>azure-webapp-maven-plugin</artifactId>  -->
-        <!--<version>1.9.1</version>  -->
-        <!--<configuration>-->
-          <!--<subscriptionId>3431bc0c-d61b-4575-b072-8f51555cf95a</subscriptionId>-->
-          <!--<appServicePlanName>ASP-carlserver-a17d</appServicePlanName>-->
-          <!--<schemaVersion>V2</schemaVersion>-->
-          <!--<resourceGroup>carlserver</resourceGroup>-->
-          <!--<appName>onshoreelectronics</appName>-->
-          <!--<pricingTier>Free_F1</pricingTier>-->
-          <!--<region>northeurope</region>-->
-          <!--<runtime>-->
-            <!--<os>linux</os>-->
-            <!--<javaVersion>jre8</javaVersion>-->
-            <!--<webContainer>jre8</webContainer>-->
-          <!--</runtime>-->
-          <!--<deployment>-->
-            <!--<resources>-->
-              <!--<resource>-->
-                <!--<directory>${project.basedir}/target</directory>-->
-                <!--<includes>-->
-                  <!--<include>*.jar</include>-->
-                <!--</includes>-->
-              <!--</resource>-->
-            <!--</resources>-->
-          <!--</deployment>-->
-        <!--</configuration>-->
-      <!--</plugin> -->
+      </plugin>
     </plugins> 
-  </build> 
+  </build>
+  <profiles>
+    <profile>
+      <!-- Production mode is activated using -Pproduction -->
+      <id>production</id>
+      <properties>
+        <vaadin.productionMode>true</vaadin.productionMode>
+      </properties>
+
+      <dependencies>
+        <dependency>
+          <groupId>com.vaadin</groupId>
+          <artifactId>flow-server-production-mode</artifactId>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+              <jvmArguments>-Dvaadin.productionMode</jvmArguments>
+              <executable>true</executable>
+              <outputDirectory>target/electron/java</outputDirectory>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-maven-plugin</artifactId>
+            <version>${vaadin.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>build-frontend</goal>
+                </goals>
+                <phase>compile</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Electron build begin -->
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>1.9.1</version>
+            <configuration>
+              <installDirectory>target/electron</installDirectory>
+            </configuration>
+            <executions>
+              <execution>
+                <id>install node</id>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+                <configuration>
+                  <nodeVersion>v8.11.1</nodeVersion>
+                </configuration>
+              </execution>
+              <execution>
+                <id>npm install</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <arguments>install</arguments>
+                  <workingDirectory>target/electron</workingDirectory>
+                </configuration>
+              </execution>
+              <execution>
+                <id>install electron-packager -g</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <arguments>install electron-packager -g</arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>package electron windows</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <arguments>run package-windows</arguments>
+                  <workingDirectory>target/electron</workingDirectory>
+                </configuration>
+              </execution>
+              <!--<execution>-->
+              <!--<id>package electron mac</id>-->
+              <!--<goals>-->
+              <!--<goal>npm</goal>-->
+              <!--</goals>-->
+              <!--<phase>package</phase>-->
+              <!--<configuration>-->
+              <!--<arguments>run package-mac</arguments>-->
+              <!--<workingDirectory>target/electron</workingDirectory>-->
+              <!--</configuration>-->
+              <!--</execution>-->
+              <!--<execution>-->
+              <!--<id>package electron linux</id>-->
+              <!--<goals>-->
+              <!--<goal>npm</goal>-->
+              <!--</goals>-->
+              <!--<phase>package</phase>-->
+              <!--<configuration>-->
+              <!--<arguments>run package-linux</arguments>-->
+              <!--<workingDirectory>target/electron</workingDirectory>-->
+              <!--</configuration>-->
+              <!--</execution>-->
+            </executions>
+          </plugin>
+          <!-- open-jdk download -->
+          <plugin>
+            <groupId>com.googlecode.maven-download-plugin</groupId>
+            <artifactId>download-maven-plugin</artifactId>
+            <version>1.5.0</version>
+            <executions>
+              <execution>
+                <id>download-openjdk-jre-windows</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>wget</goal>
+                </goals>
+                <configuration>
+                  <url>
+                    https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jre_x64_windows_hotspot_8u222b10.zip
+                  </url>
+                  <outputDirectory>${project.build.directory}/openjdk-jre/windows/</outputDirectory>
+                  <outputFileName>jre_windows.zip</outputFileName>
+                </configuration>
+              </execution>
+              <!--<execution>-->
+              <!--<id>download-openjdk-jre-mac-os</id>-->
+              <!--<phase>package</phase>-->
+              <!--<goals>-->
+              <!--<goal>wget</goal>-->
+              <!--</goals>-->
+              <!--<configuration>-->
+              <!--<url>-->
+              <!--https://github.com/AdoptOpenJDK/openjdk8-binaries/archive/jdk8u252-b09.2_openj9-0.20.0.zip-->
+              <!--</url>-->
+              <!--<outputDirectory>${project.build.directory}/openjdk-jre/mac-os/</outputDirectory>-->
+              <!--<outputFileName>jre_mac.tar.gz</outputFileName>-->
+              <!--</configuration>-->
+              <!--</execution>-->
+              <!--<execution>-->
+              <!--<id>download-openjdk-jre-linux</id>-->
+              <!--<phase>package</phase>-->
+              <!--<goals>-->
+              <!--<goal>wget</goal>-->
+              <!--</goals>-->
+              <!--<configuration>-->
+              <!--<url>-->
+              <!--https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jre_x64_linux_hotspot_8u222b10.tar.gz-->
+              <!--</url>-->
+              <!--<outputDirectory>${project.build.directory}/openjdk-jre/linux/</outputDirectory>-->
+              <!--<outputFileName>jre_linux.tar.gz</outputFileName>-->
+              <!--</configuration>-->
+              <!--</execution>-->
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>truezip-maven-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+              <execution>
+                <id>unpack-openjdk-jre-windows</id>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <fileset>
+                    <directory>${project.build.directory}/openjdk-jre/windows/jre_windows.zip
+                    </directory>
+                    <outputDirectory>${project.build.directory}/openjdk-jre/windows/
+                    </outputDirectory>
+                  </fileset>
+                </configuration>
+              </execution>
+              <!--<execution>-->
+              <!--<id>unpack-openjdk-jre-mac-os</id>-->
+              <!--<goals>-->
+              <!--<goal>copy</goal>-->
+              <!--</goals>-->
+              <!--<phase>package</phase>-->
+              <!--<configuration>-->
+              <!--<fileset>-->
+              <!--<directory>${project.build.directory}/openjdk-jre/mac-os/jre_mac.tar.gz-->
+              <!--</directory>-->
+              <!--<outputDirectory>${project.build.directory}/openjdk-jre/mac-os/-->
+              <!--</outputDirectory>-->
+              <!--</fileset>-->
+              <!--</configuration>-->
+              <!--</execution>-->
+              <!--<execution>-->
+              <!--<id>unpack-openjdk-jre-linux</id>-->
+              <!--<goals>-->
+              <!--<goal>copy</goal>-->
+              <!--</goals>-->
+              <!--<phase>package</phase>-->
+              <!--<configuration>-->
+              <!--<fileset>-->
+              <!--<directory>${project.build.directory}/openjdk-jre/linux/jre_linux.tar.gz-->
+              <!--</directory>-->
+              <!--<outputDirectory>${project.build.directory}/openjdk-jre/linux/-->
+              <!--</outputDirectory>-->
+              <!--</fileset>-->
+              <!--</configuration>-->
+              <!--</execution>-->
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <id>copy-resources</id>
+                <!-- copying the source required by the electron build needs to be done early-->
+                <phase>validate</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${basedir}/target/electron</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>src/main/javascript</directory>
+                    </resource>
+                    <resource>
+                      <directory>.</directory>
+                      <includes>
+                        <include>LICENSE</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>copy-openjdk-jre-windows</id>
+                <!-- adding the openjdk jre should be done later -->
+                <phase>package</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>
+                    ${project.build.directory}/electron/carl-e-commerce-windows/resources/app/java/jre
+                  </outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}/openjdk-jre/windows/jdk8u222-b10-jre
+                      </directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <!--<execution>-->
+              <!--<id>copy-openjdk-jre-mac-os</id>-->
+              <!--<phase>package</phase>-->
+              <!--<goals>-->
+              <!--<goal>copy-resources</goal>-->
+              <!--</goals>-->
+              <!--<configuration>-->
+              <!--<outputDirectory>-->
+              <!--${project.build.directory}/electron/carl-e-commerce-darwin-x64/carl-e-commerce.app/Contents/Resources/app/java/jre/-->
+              <!--</outputDirectory>-->
+              <!--<resources>-->
+              <!--<resource>-->
+              <!--<directory>${project.build.directory}/openjdk-jre/mac-os/jdk8u222-b10-jre-->
+              <!--</directory>-->
+              <!--</resource>-->
+              <!--</resources>-->
+              <!--</configuration>-->
+              <!--</execution>-->
+              <!--<execution>-->
+              <!--<id>copy-openjdk-jre-linux</id>-->
+              <!--<phase>package</phase>-->
+              <!--<goals>-->
+              <!--<goal>copy-resources</goal>-->
+              <!--</goals>-->
+              <!--<configuration>-->
+              <!--<outputDirectory>-->
+              <!--${project.build.directory}/electron/carl-e-commerce-linux-x64/resources/app/java/jre-->
+              <!--</outputDirectory>-->
+              <!--<resources>-->
+              <!--<resource>-->
+              <!--<directory>${project.build.directory}/openjdk-jre/linux/jdk8u222-b10-jre-->
+              <!--</directory>-->
+              <!--</resource>-->
+              <!--</resources>-->
+              <!--</configuration>-->
+              <!--</execution>-->
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
