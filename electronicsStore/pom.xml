@@ -16,7 +16,7 @@
   <properties> 
     <java.version>1.8</java.version>  
     <azure.version>2.2.0</azure.version>  
-    <vaadin.version>14.1.23</vaadin.version>  
+    <vaadin.version>19.0.6</vaadin.version>  
     <docker.image.prefix>electronicsStore</docker.image.prefix> 
   </properties>
   <repositories>
